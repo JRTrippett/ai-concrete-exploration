@@ -1,0 +1,307 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>ACMC AI Research Paths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a lab notebook. Narrow reading column, wide spec table that scrolls on its own, sticky section nav. */
+:root{
+  --bg:#eceeed; --paper:#f7f8f7; --ink:#1b2123; --muted:#5a6467; --rule:#cdd3d2;
+  --oxide:#a8491f; --oxide-soft:#f3e2d9; --steel:#2f6266; --steel-soft:#dcebeb; --warn:#8a6a10; --warn-soft:#f4ecd3;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141819; --paper:#1c2223; --ink:#e4e8e7; --muted:#9aa5a7; --rule:#343d3f;
+  --oxide:#e07a4c; --oxide-soft:#3a2219; --steel:#7fb6b9; --steel-soft:#1d3234; --warn:#d9b552; --warn-soft:#352c12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141819; --paper:#1c2223; --ink:#e4e8e7; --muted:#9aa5a7; --rule:#343d3f;
+  --oxide:#e07a4c; --oxide-soft:#3a2219; --steel:#7fb6b9; --steel-soft:#1d3234; --warn:#d9b552; --warn-soft:#352c12; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px;padding-block:0 64px}
+.read{max-width:68ch}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,6vw,4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.7rem,3.6vw,2.3rem)}
+h3{font-size:1.45rem;font-weight:600}
+p{margin:0}
+a{color:var(--steel)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--oxide);outline-offset:2px}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--oxide)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--rule)}
+nav.top .wrap{display:flex;gap:4px 20px;flex-wrap:wrap;align-items:center;padding-block:10px}
+nav.top a{font-family:var(--mono);font-size:.78rem;text-decoration:none;color:var(--muted);letter-spacing:.04em}
+nav.top a:hover{color:var(--ink)}
+nav.top .brand{font-family:var(--display);font-weight:700;font-size:1.05rem;color:var(--ink);margin-right:auto}
+
+header.hero{padding-block:48px 28px;display:grid;gap:18px}
+.hero .lede{font-size:1.15rem;max-width:62ch}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+
+section{padding-block:40px 8px;display:grid;gap:18px}
+.stack{display:grid;gap:14px}
+
+/* fit matrix */
+.matrix-wrap{overflow-x:auto;border:1px solid var(--rule);background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--rule)}
+thead th{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--paper);position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+.matrix{min-width:720px}
+.matrix td:first-child{font-weight:600;white-space:nowrap}
+.dots{font-family:var(--mono);letter-spacing:.15em;color:var(--oxide)}
+.dots .off{color:var(--rule)}
+
+/* project entries */
+.project{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding-block:26px;border-top:1px solid var(--rule)}
+.project-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:2px}
+.tag.flag{background:var(--oxide-soft);color:var(--oxide)}
+.tag.ramp{background:var(--steel-soft);color:var(--steel)}
+.tag.stretch{background:var(--warn-soft);color:var(--warn)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px 26px}
+.facts div{min-width:0}
+.facts dt{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.facts dd{margin:0;font-size:.95rem}
+dl{margin:0}
+.callout{background:var(--paper);border:1px solid var(--rule);padding:16px 18px;max-width:72ch}
+.callout strong{color:var(--oxide)}
+
+/* spec comparison */
+.poc{background:var(--paper);border:1px solid var(--rule);padding:22px 20px;display:grid;gap:18px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button.toggle{font-family:var(--mono);font-size:.78rem;background:transparent;color:var(--ink);border:1px solid var(--rule);padding:7px 12px;cursor:pointer}
+button.toggle[aria-pressed="true"]{background:var(--oxide);border-color:var(--oxide);color:var(--paper)}
+.spec-wrap{overflow-x:auto;border:1px solid var(--rule);background:var(--bg)}
+.spec{min-width:860px}
+.spec th[scope="row"]{font-weight:600;font-family:var(--body);font-size:.88rem;width:190px;background:var(--bg)}
+.spec td{font-family:var(--mono);font-size:.8rem;font-variant-numeric:tabular-nums}
+.spec td small{display:block;font-family:var(--body);color:var(--muted);font-size:.74rem;margin-top:2px}
+.spec tr.diverge th[scope="row"]{color:var(--oxide)}
+.spec.hl tr.diverge td{background:var(--oxide-soft)}
+.spec.hl tr:not(.diverge){opacity:.5}
+.spec .group td,.spec .group th{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);background:var(--steel-soft);padding-block:6px}
+.na{color:var(--muted)}
+.chart{width:100%;max-width:640px;height:auto;display:block}
+.chart text{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.chart .lbl{fill:var(--ink);font-size:12px}
+.findings{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.findings p{font-size:.95rem}
+.findings b{display:block;font-family:var(--display);font-size:1.15rem;font-weight:600;margin-bottom:2px}
+.sources{font-size:.85rem;display:grid;gap:4px}
+.sources li{margin-bottom:2px}
+ol.steps{margin:0;padding-left:1.3em;display:grid;gap:10px;max-width:70ch}
+footer{border-top:1px solid var(--rule);margin-top:48px;padding-top:18px;font-size:.85rem;color:var(--muted)}
+@media (max-width:520px){h1{font-size:2.3rem} .poc{padding:16px 14px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+html{scroll-behavior:smooth}
+</style>
+
+<nav class="top" aria-label="Sections">
+  <div class="wrap">
+    <span class="brand">ACMC × AI</span>
+    <a href="#paths">Project paths</a>
+    <a href="#projects">Details</a>
+    <a href="#poc">Spec comparison</a>
+    <a href="#next">Next steps</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow">Prepared for Dr. Kay Wille · SoCEE · October 2026</span>
+    <h1>Where AI could take the ACMC lab next</h1>
+    <p class="lede">Five project directions that pair AI methods with work the Advanced Cementitious Materials and Composites lab already does: UHPC, crumbling foundations, and durability. Each one builds hands-on experience with AI-integrated research workflows and ends in something you would put your name on.</p>
+    <div class="meta"><span>Prepared by Jonathan Trippett</span><span>Draft for discussion</span><span>Includes a working proof of concept</span></div>
+  </header>
+
+  <div class="callout read">
+    <p><strong>The core idea.</strong> Most "AI for concrete" papers train a model on a few hundred published UHPC mixes and stop at a prediction. The ACMC lab has things those papers don't: years of labeled pyrrhotite field cases, petrographic and microstructural image data, and the ability to pour and test what a model proposes. The strongest projects lean on those assets.</p>
+  </div>
+
+  <section id="paths" aria-labelledby="paths-h">
+    <span class="eyebrow">Overview</span>
+    <h2 id="paths-h">The five paths at a glance</h2>
+    <p class="read muted">Dots are a rough relative read, three being highest. Effort assumes Jonathan does the AI build and lab students supply domain data and validation.</p>
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead><tr><th>Path</th><th>Uses lab's own data</th><th>Novelty</th><th>Effort</th><th>Main deliverable</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td>A. Foundation triage model</td><td class="dots">●●●</td><td class="dots">●●●</td><td class="dots">●●<span class="off">●</span></td><td>Paper + screening tool</td><td><span class="tag flag">Flagship</span></td></tr>
+          <tr><td>B. Digital petrography</td><td class="dots">●●●</td><td class="dots">●●●</td><td class="dots">●●<span class="off">●</span></td><td>Methods paper</td><td><span class="tag flag">Flagship option</span></td></tr>
+          <tr><td>C. Open UHPC database</td><td class="dots">●<span class="off">●●</span></td><td class="dots">●●<span class="off">●</span></td><td class="dots">●●<span class="off">●</span></td><td>Dataset paper</td><td><span class="tag ramp">Workflow builder</span></td></tr>
+          <tr><td>D. Lab-in-the-loop mix agent</td><td class="dots">●●●</td><td class="dots">●●<span class="off">●</span></td><td class="dots">●●●</td><td>Paper + reusable workflow</td><td><span class="tag stretch">Longer horizon</span></td></tr>
+          <tr><td>E. DOT spec review</td><td class="dots"><span class="off">●●●</span></td><td class="dots">●<span class="off">●●</span></td><td class="dots">●<span class="off">●●</span></td><td>Review note / TRB-style paper</td><td><span class="tag ramp">On-ramp</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="projects" aria-labelledby="proj-h">
+    <span class="eyebrow">Details</span>
+    <h2 id="proj-h">What each path involves</h2>
+
+    <article class="project">
+      <div class="project-head"><h3>A. Crumbling foundation risk triage</h3><span class="tag flag">Flagship</span></div>
+      <p class="read">A model that takes basement wall photos plus cheap metadata (build year, town, distance from the implicated quarry) and returns a priority score for which homes most need core testing. Core testing can cost up to $4,000 per home, and roughly 35,000 homes around Stafford Springs are potentially affected. The lab already holds the rare combination that makes this possible: field photos paired with actual core results. The USGS aerial survey mapping pyrrhotite across Connecticut adds a free geologic layer.</p>
+      <dl class="facts">
+        <div><dt>Builds on</dt><dd>Kay's risk assessment framework published in Cement and Concrete Research</dd></div>
+        <div><dt>AI workflow learned</dt><dd>Image model fine-tuning, combining images with tabular data, calibrated risk scores</dd></div>
+        <div><dt>Deliverable</dt><dd>Journal paper and a triage tool CRCOG or CFSIC could use</dd></div>
+        <div><dt>Watch for</dt><dd>Homeowner consent and privacy; addresses reduced to town or grid level</dd></div>
+      </dl>
+    </article>
+
+    <article class="project">
+      <div class="project-head"><h3>B. Digital petrography, borrowed from pathology</h3><span class="tag flag">Flagship option</span></div>
+      <p class="read">Thin sections and SEM images of concrete pose the same problem as whole-slide pathology images: find the problem particles, measure them, and grade damage in the surrounding matrix. Computational pathology has years of mature tooling for segmentation, stain normalization, and tiling very large images. Very little of it has reached cement science. Pointed at pyrrhotite detection and oxidation staging in the lab's existing micrographs, this becomes a cross-disciplinary methods paper. It can also serve as the lab-side half of Path A.</p>
+      <dl class="facts">
+        <div><dt>Builds on</dt><dd>The lab's electrochemical accelerated-deterioration work and its microstructural analyses</dd></div>
+        <div><dt>AI workflow learned</dt><dd>Image segmentation, expert annotation loops, quantitative image metrics</dd></div>
+        <div><dt>Deliverable</dt><dd>Methods paper plus an open analysis pipeline</dd></div>
+        <div><dt>Watch for</dt><dd>Image formats and magnifications vary; needs a few hundred annotated regions</dd></div>
+      </dl>
+    </article>
+
+    <article class="project">
+      <div class="project-head"><h3>C. An LLM-built open UHPC database</h3><span class="tag ramp">Workflow builder</span></div>
+      <p class="read">Data scarcity is the field's real bottleneck. A 2026 group used an LLM pipeline to pull nearly 9,000 records from more than 27,000 papers on blended cement concrete in about an hour. Typical UHPC machine learning studies train on 500 to 900 points. Nobody has done this for UHPC with full fiber detail (type, geometry, volume, bundling), which is exactly where the lab's expertise sits. Kay would supervise the extraction agent and do the expert validation, which is the best hands-on lesson in AI workflows of the five.</p>
+      <dl class="facts">
+        <div><dt>AI workflow learned</dt><dd>Agentic literature extraction, schema design, human validation of AI output</dd></div>
+        <div><dt>Deliverable</dt><dd>Dataset paper (Scientific Data or Data in Brief tier); widely citable</dd></div>
+        <div><dt>Bonus</dt><dd>Feeds the faculty-publications search system Kay has asked about</dd></div>
+        <div><dt>Watch for</dt><dd>Publisher terms on full text; extract facts, not copied passages</dd></div>
+      </dl>
+    </article>
+
+    <article class="project">
+      <div class="project-head"><h3>D. Lab-in-the-loop mix design for sloped-deck overlays</h3><span class="tag stretch">Longer horizon</span></div>
+      <p class="read">Not a robot lab. An agent proposes the next few trial batches using Bayesian optimization, the lab pours and tests them, and results go back in. The target is a real, underserved spec: thixotropic UHPC for bridge deck overlays. Only 17 of the projects on FHWA's UHPC map (about 4%) are deck overlays, partly because standard UHPC self-levels and runs off sloped decks. Add New England materials and a carbon limit and the research question is clean: how many fewer trial batches does it take to meet a DOT spec?</p>
+      <dl class="facts">
+        <div><dt>Builds on</dt><dd>Kay's TIDC work on early-strength UHPC with local materials; the UHPC bridge repair work with Arash</dd></div>
+        <div><dt>AI workflow learned</dt><dd>Experiment planning agents, uncertainty-aware models, closing the loop with real tests</dd></div>
+        <div><dt>Deliverable</dt><dd>Paper with experimental verification, which most ML mix papers lack</dd></div>
+        <div><dt>Watch for</dt><dd>Needs a semester of lab time and materials budget</dd></div>
+      </dl>
+    </article>
+
+    <article class="project">
+      <div class="project-head"><h3>E. AI-assisted comparison of state UHPC overlay specs</h3><span class="tag ramp">On-ramp</span></div>
+      <p class="read">A structured comparison of how state DOTs specify UHPC overlays, built with AI extraction and checked by an expert. Modest in scope, doable in weeks, and a low-risk way to learn the workflow before committing to a larger build. A first pass is below.</p>
+    </article>
+
+    <div class="callout read">
+      <p><strong>On satellite imagery.</strong> Satellites can't see cracking or chemistry, and basement walls aren't visible from orbit. Satellite radar (InSAR) does measure millimeter-scale movement on bridges over time, and a recent study used free Sentinel-1 images to flag a deteriorating bridge out of 14, later confirmed by inspection. Tracking Connecticut bridges repaired with UHPC against unrepaired ones could work, but it leans toward structures. Worth raising with Arash as a possible three-way collaboration.</p>
+    </div>
+  </section>
+
+  <section id="poc" aria-labelledby="poc-h">
+    <span class="eyebrow">Proof of concept · Path E</span>
+    <h2 id="poc-h">Four UHPC overlay specs, side by side</h2>
+    <p class="read">Assembled with AI from the special provisions themselves and from the 2026 Nebraska DOT overlay report. This is a first pass to show the workflow, not a reviewed result. Values marked <span class="mono">†</span> come from the Nebraska report's summary tables rather than the original spec, and every number should be checked against source before it goes into anything published.</p>
+
+    <div class="poc">
+      <div class="controls">
+        <button type="button" class="toggle" id="hlBtn" aria-pressed="false">Highlight the biggest differences</button>
+        <span class="muted" style="font-size:.85rem">Scroll the table sideways on small screens.</span>
+      </div>
+      <div class="spec-wrap">
+        <table class="spec" id="specTable">
+          <thead><tr><th>Requirement</th><th>Iowa SP-230168<small>Proprietary · Polk Co. · 2024</small></th><th>Iowa SP-230382<small>Non-proprietary · Crawford Co. · Dec 2025</small></th><th>New York 584.21010001<small>NYSDOT overlay item</small></th><th>New Jersey<small>NJDOT, via NDOT 2026 summary</small></th></tr></thead>
+          <tbody>
+            <tr class="group"><th colspan="5">Strength</th></tr>
+            <tr class="diverge"><th scope="row">28-day compressive</th><td>≥ 17.5 ksi<small>AASHTO T 22</small></td><td>≥ 12.5 ksi<small>ASTM C1856, record only</small></td><td>≥ 18 ksi<small>ASTM C39</small></td><td>≥ 18 ksi †</td></tr>
+            <tr class="diverge"><th scope="row">Early strength</th><td>≥ 12 ksi at 48 h<small>mix design</small></td><td>≥ 11 ksi at 14 d<small>14-day test governs acceptance</small></td><td>≥ 12 ksi at 48 h</td><td>11 ksi at 2 d for finishing †</td></tr>
+            <tr class="diverge"><th scope="row">Tensile behavior</th><td class="na">Not specified</td><td class="na">Not specified</td><td class="na">Not specified</td><td>1st crack ≥ 1,000 psi; hardening ratio ≥ 1.25<small>AASHTO T 397 †</small></td></tr>
+            <tr class="group"><th colspan="5">Mix and fresh properties</th></tr>
+            <tr class="diverge"><th scope="row">Steel fiber content</th><td>≥ 3.25% by volume</td><td>2.0% by volume<small>264 lb/yd³</small></td><td>≥ 3% by volume</td><td>≈ 3 to 3.25% †</td></tr>
+            <tr class="diverge"><th scope="row">Flow</th><td>Slump flow 8 to 10 in<small>ASTM C1856</small></td><td>6 to 8 in with fibers<small>static, no drops</small></td><td>Measured each batch<small>range not in source excerpt</small></td><td>Dynamic 7 to 10 in †</td></tr>
+            <tr class="diverge"><th scope="row">Mix source</th><td>Four approved suppliers only</td><td>Prescribed recipe; owner carries mix risk</td><td>Single-manufacturer system</td><td class="na">Not captured</td></tr>
+            <tr><th scope="row">Slope requirement</th><td>Thixotropic, match roadway profile</td><td>Placed with finishing machine</td><td>Hold profile on 8% grade</td><td class="na">Not captured</td></tr>
+            <tr class="group"><th colspan="5">Durability</th></tr>
+            <tr class="diverge"><th scope="row">Chloride resistance</th><td>&lt; 0.1183 lb/yd³<small>AASHTO T 259 ponding</small></td><td>≤ 300 coulombs<small>RCPT, record only</small></td><td>≤ 250 coulombs †</td><td>≤ 250 coulombs †</td></tr>
+            <tr><th scope="row">Long-term shrinkage</th><td>≤ 800 µε<small>AASHTO T 160, 64 wk</small></td><td class="na">Not specified</td><td>≤ 766 µε †</td><td>≤ 800 µε †</td></tr>
+            <tr><th scope="row">Freeze-thaw</th><td>RDM &gt; 95%, 300 cycles</td><td class="na">Not specified</td><td>RDM &gt; 96% †</td><td>RDM &gt; 95% †</td></tr>
+            <tr class="group"><th colspan="5">Construction and acceptance</th></tr>
+            <tr class="diverge"><th scope="row">Surface preparation</th><td>Hydrodemolition</td><td>Shotblasting to ICRI CSP 5 to 7</td><td class="na">Not in source excerpt</td><td class="na">Not captured</td></tr>
+            <tr class="diverge"><th scope="row">Bond acceptance</th><td class="na">No numeric pull-off test</td><td>Avg ≥ 250 psi, any test ≥ 200 psi<small>ASTM C1583</small></td><td class="na">Not in source excerpt</td><td>Substrate failure, or &gt; 400 psi †</td></tr>
+            <tr class="diverge"><th scope="row">Strength to grind or open</th><td>11 ksi</td><td>12 ksi to grind</td><td>12 ksi</td><td>11 ksi †</td></tr>
+            <tr><th scope="row">Crack limits</th><td>≤ 0.006 in; reject &gt; 0.009 in</td><td>Surface defects judged by Engineer</td><td class="na">Not in source excerpt</td><td class="na">Not captured</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="stack">
+        <h3>28-day compressive strength against the UHPC definition</h3>
+        <svg class="chart" viewBox="0 0 640 230" role="img" aria-labelledby="chartT">
+          <title id="chartT">Required 28-day compressive strength by spec, compared with the ACI 239 UHPC threshold of about 22 ksi</title>
+          <g id="bars"></g>
+        </svg>
+        <p class="muted" style="font-size:.85rem">ACI 239 defines UHPC at a minimum specified compressive strength of 150 MPa (about 22 ksi). None of the four overlay specs require it.</p>
+      </div>
+
+      <div class="findings">
+        <p><b>No overlay spec meets the UHPC strength definition.</b>Requirements range from 12.5 to 18 ksi. That fits the Nebraska report's point that overlays depend on bond, tension, and durability more than compression, but the specs still lead with compressive strength.</p>
+        <p><b>Only one spec tests tensile behavior.</b>New Jersey sets first-cracking and strain-hardening limits. For a thin layer meant to resist cracking, that gap in the other three is a real research question.</p>
+        <p><b>Fiber content splits by mix philosophy.</b>Proprietary-style specs call for 3 to 3.25% fiber. Iowa's non-proprietary recipe uses 2%, which matters for cost and is exactly where the lab's fiber efficiency work applies.</p>
+        <p><b>Connecticut isn't in this pass.</b>We didn't locate a CTDOT UHPC overlay provision. If one doesn't exist yet, a New England non-proprietary overlay mix is an open lane for the lab.</p>
+      </div>
+    </div>
+
+    <ul class="sources">
+      <li><a href="https://ia.iowadot.gov/specifications/provisions/2023/SP-230168.pdf">Iowa DOT SP-230168, UHPC Overlay (Feb 2024)</a></li>
+      <li><a href="https://ia.iowadot.gov/specifications/provisions/2023/SP-230382.pdf">Iowa DOT SP-230382, Non-Proprietary UHPC Overlay (Dec 2025)</a></li>
+      <li><a href="https://www.dot.ny.gov/spec-repository-us/584.21010001.pdf">NYSDOT Item 584.21010001, UHPC Overlay</a> (read from search excerpts; full file blocked automated access)</li>
+      <li><a href="https://dot.nebraska.gov/media/m44jfgyk/fy24-034-_final_report_4172026.pdf">Hu et al., UHPC for Bridge Deck Overlay and Structural Deck Repair, NDOT FY24(034), April 2026</a> (Tables 2.4, 2.6, 2.8, 2.9)</li>
+      <li><a href="https://www.dot.ny.gov/divisions/engineering/structures/repository/events-news/NYSDOT_2017_UHPC_Workshop_Graybeal.pdf">Graybeal, NYSDOT 2017 UHPC Workshop</a> (ACI 239 definition)</li>
+    </ul>
+  </section>
+
+  <section id="next" aria-labelledby="next-h">
+    <span class="eyebrow">Next steps</span>
+    <h2 id="next-h">A suggested sequence</h2>
+    <ol class="steps">
+      <li><b>Pick an on-ramp.</b> Path E (finish this spec review across more states) or Path C (start the UHPC database). Either produces a small result within weeks and gets the workflow in place.</li>
+      <li><b>Inventory the lab's data.</b> What photos, core results, micrographs, and mix logs exist, in what formats, and under what consent terms. This decides whether A or B is the flagship.</li>
+      <li><b>Choose the flagship.</b> A has the clearest public impact; B is the most novel methodologically. They combine well.</li>
+      <li><b>Bring in Arash if structures fit.</b> Path D and the InSAR idea both overlap with his bridge repair work.</li>
+    </ol>
+  </section>
+
+  <footer>Draft prepared by Jonathan Trippett for discussion with Dr. Kay Wille, UConn School of Civil and Environmental Engineering. Figures from secondary sources are marked; verify against originals before citing.</footer>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('hlBtn'), tbl=document.getElementById('specTable');
+  btn.addEventListener('click',function(){
+    var on=btn.getAttribute('aria-pressed')!=='true';
+    btn.setAttribute('aria-pressed',String(on));
+    tbl.classList.toggle('hl',on);
+  });
+  // bar chart, one linear scale 0..24 ksi
+  var data=[["Iowa non-prop.",12.5],["Iowa SP-230168",17.5],["New York",18],["New Jersey",18]];
+  var g=document.getElementById('bars'), ns='http://www.w3.org/2000/svg';
+  var x0=130, x1=610, max=24, sc=function(v){return x0+(x1-x0)*v/max};
+  function el(n,a,t){var e=document.createElementNS(ns,n);for(var k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;g.appendChild(e);return e}
+  [0,6,12,18,24].forEach(function(v){
+    el('line',{x1:sc(v),x2:sc(v),y1:12,y2:182,stroke:'var(--rule)','stroke-width':1});
+    el('text',{x:sc(v),y:200,'text-anchor':'middle'},v+' ksi');
+  });
+  data.forEach(function(d,i){
+    var y=22+i*40;
+    el('text',{x:x0-10,y:y+16,'text-anchor':'end','class':'lbl'},d[0]);
+    el('rect',{x:x0,y:y,width:sc(d[1])-x0,height:24,fill:'var(--steel)'});
+    el('text',{x:sc(d[1])+6,y:y+16},d[1]);
+  });
+  var xa=sc(21.8);
+  el('line',{x1:xa,x2:xa,y1:8,y2:186,stroke:'var(--oxide)','stroke-width':2,'stroke-dasharray':'5 4'});
+  el('text',{x:xa,y:222,'text-anchor':'middle',fill:'var(--oxide)'},'ACI 239 UHPC ≈ 21.8 ksi');
+})();
+</script>
+
+</body></html>
